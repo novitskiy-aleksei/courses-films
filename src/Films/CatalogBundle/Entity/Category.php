@@ -40,6 +40,18 @@ class Category
      */
     private $films;
 
+    /**
+     * @ORM\Column(name="rating", type="integer")
+     * @var
+     */
+    private $rating;
+
+    /**
+     * @ORM\Column(name="active", type="boolean", options={"default"="1"})
+     * @var
+     */
+    private $active = true;
+
     public function populate($data = array())
     {
         foreach ($data as $field => $value)
@@ -105,5 +117,37 @@ class Category
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

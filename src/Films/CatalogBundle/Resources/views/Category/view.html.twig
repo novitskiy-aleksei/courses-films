@@ -2,17 +2,12 @@
 
 {% block body %}
 
-    {% for item in topList %}
+    <h1>{{ category.title }}</h1><br/>
+    {% for item in category.films %}
         <div class="film">
             <div class="title">{{ item.title }}</div>
             <img src="{{ item.picture }}" height="100px">
-        </div>
-
-    {% endfor %}
-
-    {% for item in topCategory %}
-        <div class="category">
-            <a href="{{ path('category_view', {'id': item.id}) }}">{{ item.title }}</a>
+            <div class="director">{{ item.director.firstname }}&nbsp{{ item.director.lastname }}</div>
         </div>
     {% endfor %}
 

@@ -2,6 +2,8 @@
 
 namespace Films\CatalogBundle\Controller;
 
+use Films\CatalogBundle\Entity\Film;
+
 class FilmController extends FilmsCatalogBaseController
 {
     public function indexAction($id)
@@ -23,5 +25,19 @@ class FilmController extends FilmsCatalogBaseController
         return $this->redirect($this->generateUrl('homepage'));
     }
 
+    public function addAction($data)
+    {
+        $film = new Film();
 
+        $film->populate($data);
+        $director = $this->getEntityManager()
+            ->getRepository('FilmsCatalogBundle:Director')
+            ->findOne($data['director']['id']);
+        $film->setDirector($director);
+
+        $this->getEntityManager()->persist($film);
+        $this->getEntityManager()->flush();
+
+        return $this->redirect($this->generateUrl('homepage'));
+    }
 }

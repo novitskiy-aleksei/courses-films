@@ -8,12 +8,8 @@ class DefaultController extends FilmsCatalogBaseController
     {
         return $this->render('FilmsCatalogBundle:Default:index.html.twig', [
             'topList'       => $this->get('films_catalog.film_manager')->getTopList(),
-            'topCategory'   => $this->get('films_catalog.film_manager')->getTopList()
+            'topCategory'   => $this->get('films_catalog.category_manager')->getTopList()
         ]);
     }
 
-    public function s()
-    {
-
-    }
 }

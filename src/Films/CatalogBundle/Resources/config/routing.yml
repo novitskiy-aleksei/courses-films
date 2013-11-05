@@ -9,3 +9,12 @@ film_view:
 film_delete:
     pattern:  /film/delete/{id}
     defaults: { _controller: FilmsCatalogBundle:Film:remove }
+
+category_view:
+    pattern:  /category/{id}
+    defaults: { _controller: FilmsCatalogBundle:Category:index }
+
+category_delete:
+    pattern:  /category/delete/{id}
+    defaults: { _controller: FilmsCatalogBundle:Category:remove }
+
