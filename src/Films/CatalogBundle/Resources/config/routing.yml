@@ -1,0 +1,11 @@
+homepage:
+    pattern:  /
+    defaults: { _controller: FilmsCatalogBundle:Default:index }
+
+film_view:
+    pattern:  /film/view/{id}
+    defaults: { _controller: FilmsCatalogBundle:Film:index }
+
+film_delete:
+    pattern:  /film/delete/{id}
+    defaults: { _controller: FilmsCatalogBundle:Film:remove }

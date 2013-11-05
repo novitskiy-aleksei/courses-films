@@ -2,12 +2,18 @@
 
 namespace Films\CatalogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class DefaultController extends Controller
+class DefaultController extends FilmsCatalogBaseController
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('FilmsCatalogBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('FilmsCatalogBundle:Default:index.html.twig', [
+            'topList'       => $this->get('films_catalog.film_manager')->getTopList(),
+            'topCategory'   => $this->get('films_catalog.film_manager')->getTopList()
+        ]);
+    }
+
+    public function s()
+    {
+
     }
 }

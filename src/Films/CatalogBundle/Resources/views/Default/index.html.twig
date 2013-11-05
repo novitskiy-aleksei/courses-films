@@ -1,1 +1,13 @@
-Hello {{ name }}!
+{% extends "FilmsCatalogBundle::layout.html.twig" %}
+
+{% block body %}
+
+    {% for item in topList %}
+        <div class="film">
+            <div class="title">{{ item.title }}</div>
+            <img src="{{ item.picture }}" height="100px">
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

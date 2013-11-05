@@ -1,0 +1,11 @@
+{% extends "FilmsCatalogBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <div class="catalog">
+        <div class="title">{{ film.title }}</div>
+        <img src="{{ film.picture }}" height="100px">
+        {{ film.description }}
+    </div>
+
+{% endblock %}
