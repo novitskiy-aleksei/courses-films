@@ -2,6 +2,7 @@
 
 namespace Films\CatalogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -83,10 +84,15 @@ class Film
      */
     private $active = true;
 
+    public function __construct()
+    {
+        $this->actors = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
+
     public function populate($data = array())
     {
-        foreach ($data as $field => $value)
-        {
+        foreach ($data as $field => $value) {
             if(property_exists($this, $field))
                 $this->$field = $value;
         }
@@ -100,6 +106,20 @@ class Film
     public function getId()
     {
         return $this->id;
+    }
+
+    public function addActor($actor)
+    {
+        $this->actors[] = $actor;
+
+        return $this;
+    }
+
+    public function addCategory($category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
     }
 
     /**
