@@ -55,6 +55,11 @@ class Actor
         }
     }
 
+    public function __toString()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     /**
      * Get id
      *

@@ -10,6 +10,11 @@ film_delete:
     pattern:  /film/delete/{id}
     defaults: { _controller: FilmsCatalogBundle:Film:remove }
 
+film_create:
+    pattern:  /film/create
+    defaults: { _controller: FilmsCatalogBundle:Film:create }
+
+
 category_view:
     pattern:  /category/{id}
     defaults: { _controller: FilmsCatalogBundle:Category:index }

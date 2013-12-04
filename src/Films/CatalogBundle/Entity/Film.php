@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Film
@@ -26,6 +27,8 @@ class Film
     private $id;
 
     /**
+     * @Assert\NotBlank(groups={"film"})
+     * @Assert\Length(min=7, groups={"film"})
      * @ORM\Column(name="title", type="string")
      * @var
      */
@@ -38,6 +41,8 @@ class Film
     private $picture;
 
     /**
+     * @Assert\NotBlank(groups={"film"})
+     * @Assert\Length(min=7, groups={"film"})
      * @ORM\Column(name="description", type="string")
      * @var
      */

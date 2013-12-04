@@ -61,6 +61,11 @@ class Category
         }
     }
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     /**
      * Get id
      *
