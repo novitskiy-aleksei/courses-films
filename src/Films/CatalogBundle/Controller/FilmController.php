@@ -3,7 +3,10 @@
 namespace Films\CatalogBundle\Controller;
 
 use Films\CatalogBundle\Entity\Film;
+use Films\CatalogBundle\Event\RatingUpdatedEvent;
+use Films\CatalogBundle\Event\StoredEvents;
 use Films\CatalogBundle\Form\FilmType;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class FilmController extends FilmsCatalogBaseController
 {
@@ -15,6 +18,19 @@ class FilmController extends FilmsCatalogBaseController
      */
     public function indexAction($id)
     {
+        $dispatcher = new EventDispatcher();
+
+        $dispatcher->addListener(StoredEvents::RATING_UPDATED, function (RatingUpdatedEvent $event) {
+            $entity = $event->getEntry();
+            $entity->setRating($event->getScore());
+            $this->getEntityManager()->persist($entity);
+            $this->getEntityManager()->flush();
+        });
+
+        $film = new Film();
+        $event = new RatingUpdatedEvent($film, 7);
+        $dispatcher->dispatch(StoredEvents::RATING_UPDATED, $event);
+
         return $this->render('FilmsCatalogBundle:Film:view.html.twig', [
             'film' => $this->get('films_catalog.film_manager')->get($id),
         ]);
