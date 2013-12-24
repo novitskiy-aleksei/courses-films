@@ -17,16 +17,41 @@ class LoadCategory implements FixtureInterface, OrderedFixtureInterface{
 
     public function load(ObjectManager $manager)
     {
-        $category = new Category();
 
-        $category->populate([
-            'title'       => 'Экшн/Боевик',
-            'description' => 'Фильмы для настоящих мужчин',
-            'rating'      => 0,
-            'active'      => 1
-        ]);
+        $cats = [
+            [
+                'title'       => 'Экшн/Боевик',
+                'description' => 'Фильмы для настоящих мужчин',
+                'rating'      => 0,
+                'active'      => 1
+            ],
+            [
+                'title'       => 'Драма',
+                'description' => 'Фильмы для настоящих женщин',
+                'rating'      => 0,
+                'active'      => 1
+            ],
+            [
+                'title'       => 'Комедия',
+                'description' => '',
+                'rating'      => 0,
+                'active'      => 1
+            ],
+            [
+                'title'       => 'Нацистские приключения',
+                'description' => 'Фильмы',
+                'rating'      => 0,
+                'active'      => 1
+            ]
+        ];
 
-        $manager->persist($category);
+        foreach($cats as $cat) {
+            $category = new Category();
+
+            $category->populate($cat);
+
+            $manager->persist($category);
+        }
 
         $manager->flush();
     }

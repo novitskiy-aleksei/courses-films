@@ -48,6 +48,23 @@ class LoadFilm implements FixtureInterface, OrderedFixtureInterface{
 
         $manager->persist($film);
 
+        $film = new Film();
+
+        $film->populate([
+            'director'    => $director,
+            'title'       => 'Хранители',
+            'description' => '',
+            'date'        => new \DateTime('2012-11-03'),
+            'rating'      => 0,
+            'active'      => 1,
+            'picture'     => 'http://st.kp.yandex.net/images/film_iphone/iphone360_252641.jpg',
+        ]);
+
+        $film->addActor($actor);
+        $film->addCategory($category);
+
+        $manager->persist($film);
+
         $manager->flush();
     }
 } 

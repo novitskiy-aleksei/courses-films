@@ -4,10 +4,10 @@ namespace Films\CatalogBundle\Controller;
 
 class CategoryController extends FilmsCatalogBaseController
 {
-    public function indexAction($id)
+    public function indexAction($slug)
     {
         return $this->render('FilmsCatalogBundle:Category:view.html.twig', [
-            'category' => $this->get('films_catalog.category_manager')->get($id),
+            'category' => $this->get('films_catalog.category_manager')->get($slug),
         ]);
     }
 

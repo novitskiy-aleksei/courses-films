@@ -19,8 +19,8 @@ class CategoryService {
         return $this->category->findBy(['active' => '1'], ['rating' => 'desc']);
     }
 
-    public function get($id)
+    public function get($slug)
     {
-        return $this->category->findOneBy(['active' => '1', 'id' => $id]);
+        return $this->category->findOneBy(['active' => '1', 'slug' => $slug]);
     }
 } 

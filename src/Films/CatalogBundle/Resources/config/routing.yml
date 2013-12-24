@@ -16,7 +16,7 @@ film_create:
 
 
 category_view:
-    pattern:  /category/{id}
+    pattern:  /category/{slug}
     defaults: { _controller: FilmsCatalogBundle:Category:index }
 
 category_delete:

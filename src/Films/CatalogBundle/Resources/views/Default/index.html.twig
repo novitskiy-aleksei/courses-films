@@ -2,6 +2,8 @@
 
 {% block body %}
 
+    <h2>Топ фильмов</h2>
+
     {% for item in topList %}
         <div class="film">
             <div class="title">{{ item.title }}</div>
@@ -10,9 +12,11 @@
 
     {% endfor %}
 
+    <h2>Топ категорий</h2>
+
     {% for item in topCategory %}
         <div class="category">
-            <a href="{{ path('category_view', {'id': item.id}) }}">{{ item.title }}</a>
+            <a href="{{ path('category_view', {'slug': item.slug}) }}">{{ item.title }}</a>
         </div>
     {% endfor %}
 
