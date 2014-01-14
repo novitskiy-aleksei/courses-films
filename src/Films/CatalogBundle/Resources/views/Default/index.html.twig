@@ -2,6 +2,17 @@
 
 {% block body %}
 
+    {% if app.user %}
+        {{ app.user.username }}
+        <a href="{{ path('fos_user_security_logout') }}">logout</a>
+
+    {% else %}
+        Hey! You can
+        <a href="{{ path('fos_user_security_login') }}">login</a>
+        or
+        <a href="{{ path('fos_user_registration_register') }}">register</a>
+    {% endif %}
+
     <h2>Топ фильмов</h2>
 
     {% for item in topList %}
