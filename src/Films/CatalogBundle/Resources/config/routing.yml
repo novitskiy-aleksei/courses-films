@@ -14,6 +14,10 @@ film_create:
     pattern:  /film/create
     defaults: { _controller: FilmsCatalogBundle:Film:create }
 
+film_creator:
+    pattern:  /film/creator
+    defaults: { _controller: FilmsCatalogBundle:Film:add }
+    methods:  [POST]
 
 category_view:
     pattern:  /category/{slug}

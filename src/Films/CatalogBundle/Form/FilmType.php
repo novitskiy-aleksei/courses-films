@@ -22,6 +22,7 @@ class FilmType extends AbstractType
             ->add('categories')
             ->add('director', new DirectorType())
             ->add('actors')
+            ->add('save', 'submit')
         ;
     }
     

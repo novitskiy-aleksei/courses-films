@@ -2,6 +2,8 @@
 
 {% block body %}
 
+<form action="{{ path('film_creator') }}" method="POST" >
     {{ form_widget(form) }}
+</form>
 
 {% endblock %}

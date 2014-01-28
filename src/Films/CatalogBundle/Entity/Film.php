@@ -79,10 +79,10 @@ class Film
     private $actors;
 
     /**
-     * @ORM\Column(name="rating", type="integer")
+     * @ORM\Column(name="rating", type="integer", options={"default"="0"})
      * @var
      */
-    private $rating;
+    private $rating = 0;
 
     /**
      * @ORM\Column(name="active", type="boolean", options={"default"="1"})

@@ -7,6 +7,12 @@ use Films\CatalogBundle\Event\RatingUpdatedEvent;
 use Films\CatalogBundle\Event\StoredEvents;
 use Films\CatalogBundle\Form\FilmType;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class FilmController extends FilmsCatalogBaseController
 {
@@ -54,6 +60,7 @@ class FilmController extends FilmsCatalogBaseController
      * Delete film item
      *
      * @param $id integer
+     * @throws \Symfony\Component\Finder\Exception\AccessDeniedException
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function removeAction($id)
@@ -61,6 +68,14 @@ class FilmController extends FilmsCatalogBaseController
         $film = $this->get('films_catalog.film_manager')->get($id);
 
         if (!empty($film)){
+
+            $securityContext = $this->get('security.context');
+
+            // check for edit access
+            if (false === $securityContext->isGranted('DELETE', $film)) {
+                throw new AccessDeniedException();
+            }
+
             $this->getEntityManager()->remove($film);
             $this->getEntityManager()->flush();
         }
@@ -73,21 +88,46 @@ class FilmController extends FilmsCatalogBaseController
      *
      * (for testing purposes)
      *
-     * @param $data array
+     * @internal param array $data
+     * @throws \Symfony\Component\Security\Acl\Exception\Exception
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction($data)
+    public function addAction()
     {
         $film = new Film();
 
-        $film->populate($data);
-        $director = $this->getEntityManager()
-            ->getRepository('FilmsCatalogBundle:Director')
-            ->findOne($data['director']['id']);
-        $film->setDirector($director);
+        /** @var $form \Symfony\Component\Form\Form */
+        $form = $this->get('form.factory')->create(new FilmType(), $film);
 
-        $this->getEntityManager()->persist($film);
-        $this->getEntityManager()->flush();
+        $request = $this->get('request');
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if ($form->isValid()) {
+                $director = $this->getEntityManager()
+                    ->getRepository('FilmsCatalogBundle:Director')
+                    ->findOneById($film->getDirector()->getId());
+                $film->setDirector($director);
+
+                $this->getEntityManager()->persist($film);
+                $this->getEntityManager()->flush();
+
+                // creating the ACL
+                $aclProvider = $this->get('security.acl.provider');
+                $objectIdentity = ObjectIdentity::fromDomainObject($film);
+                $acl = $aclProvider->createAcl($objectIdentity);
+
+                // retrieving the security identity of the currently logged-in user
+                $securityContext = $this->get('security.context');
+                $user = $securityContext->getToken()->getUser();
+                $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+                // grant owner access
+                $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+                $aclProvider->updateAcl($acl);
+            }
+        } else {
+            throw new Exception('Form is not valid');
+        }
 
         return $this->redirect($this->generateUrl('homepage'));
     }
