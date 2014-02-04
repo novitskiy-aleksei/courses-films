@@ -11,6 +11,8 @@
         <a href="{{ path('fos_user_security_login') }}">login</a>
         or
         <a href="{{ path('fos_user_registration_register') }}">register</a>
+        or even
+        {{ facebook_login_button({'autologoutlink': true}) }}
     {% endif %}
 
     <h2>Топ фильмов</h2>

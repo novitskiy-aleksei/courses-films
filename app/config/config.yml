@@ -70,3 +70,10 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Films\CatalogBundle\Entity\User
+
+fos_facebook:
+    alias:  facebook
+    app_id: 728570877187867
+    secret: 7de679ab99e040b12d2e63c1eb7fcd90
+    cookie: true
+    permissions: [email, user_birthday, user_location]

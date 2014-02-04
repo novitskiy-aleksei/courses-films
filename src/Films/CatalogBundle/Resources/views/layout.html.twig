@@ -32,6 +32,7 @@
 
 <div class="container">
     {% block body %}{% endblock %}
+    {{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
     {% block javascripts %}{% endblock %}
 </div>
 

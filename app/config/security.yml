@@ -18,6 +18,13 @@ security:
                 csrf_provider: form.csrf_provider
             logout:       true
             anonymous:    true
+        public:
+            # since anonymous is allowed users will not be forced to login
+            pattern:   ^/.*
+            fos_facebook:
+                app_url: "http://apps.facebook.com/appName/"
+                server_url: "http://localhost/facebookApp/"
+            anonymous: true
     acl:
         connection: default
 
@@ -26,3 +33,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_facebook
+        - { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
